@@ -14,6 +14,7 @@ class NavigationDrawerBloc {
   }
 
   void dispose() {
+    _navigationController.drain();
     _navigationController.close();
   }
 }
