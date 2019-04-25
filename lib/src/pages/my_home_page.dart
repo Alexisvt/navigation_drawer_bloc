@@ -21,16 +21,20 @@ class _MyHomePageState extends State<MyHomePage> {
       body: StreamBuilder<String>(
         stream: bloc.getNavigation,
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          if (snapshot.data == "Home") {
-            return Home();
-          }
+          if (snapshot.hasData) {
+            if (snapshot.data == "Home") {
+              return Home();
+            }
 
-          if (snapshot.data == 'PageOne') {
-            return PageOne();
-          }
+            if (snapshot.data == 'PageOne') {
+              return PageOne();
+            }
 
-          if (snapshot.data == 'PageTwo') {
-            return PageTwo();
+            if (snapshot.data == 'PageTwo') {
+              return PageTwo();
+            }
+          } else {
+            return CircularProgressIndicator();
           }
         },
       ),
@@ -52,14 +56,14 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text('Home'),
             onTap: () {
               Navigator.of(context).pop();
-              bloc.updateNavigation("Home");
+              bloc.setNavigation("Home");
             },
           ),
           ListTile(
             title: Text("Page One"),
             onTap: () {
               Navigator.of(context).pop();
-              bloc.updateNavigation("PageOne");
+              bloc.setNavigation("PageOne");
             },
           ),
           ListTile(
@@ -67,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onTap: () {
               Navigator.of(context).pop();
 
-              bloc.updateNavigation("PageTwo");
+              bloc.setNavigation("PageTwo");
             },
           ),
         ],
